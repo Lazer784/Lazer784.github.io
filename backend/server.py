@@ -230,7 +230,7 @@ async def get_categories():
 @app.post("/api/customers")
 async def create_customer(customer: Customer):
     # Check if customer with email already exists
-    existing_customer = db.customers.find_one({"email": customer.email})
+    existing_customer = db.customers.find_one({"email": customer.email}, {"_id": 0})
     if existing_customer:
         return {"message": "Customer already exists", "customer": existing_customer}
     

@@ -253,6 +253,10 @@ async def get_customer(customer_id: str):
 @app.post("/api/orders")
 async def create_order(order: Order):
     order_dict = order.dict()
+    # Convert datetime to string for MongoDB storage
+    if 'created_at' in order_dict:
+        order_dict['created_at'] = order_dict['created_at'].isoformat()
+    
     db.orders.insert_one(order_dict)
     return {"message": "Order created successfully", "order": order_dict}
 

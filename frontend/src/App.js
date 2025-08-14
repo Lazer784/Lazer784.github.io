@@ -487,7 +487,7 @@ function ProductsPage({ addToCart, searchQuery }) {
           <div className="flex-1">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-2xl font-bold text-amber-900">
-                {selectedCategory === 'all' ? 'All Products' : CATEGORIES.find(c => c.id === selectedCategory)?.name}
+                {selectedCategory === 'all' ? 'All Products' : categories.find(c => c.id === selectedCategory)?.name}
               </h2>
               <span className="text-gray-600">{sortedProducts.length} products found</span>
             </div>

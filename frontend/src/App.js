@@ -234,6 +234,18 @@ function Header({ cartItems, searchQuery, setSearchQuery }) {
 
 function HomePage({ addToCart }) {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFeaturedProducts = async () => {
+      setLoading(true);
+      const allProducts = await apiService.fetchProducts();
+      setProducts(allProducts.slice(0, 3)); // Get first 3 for featured
+      setLoading(false);
+    };
+    loadFeaturedProducts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">

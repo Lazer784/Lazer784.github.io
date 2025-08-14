@@ -14,7 +14,38 @@ import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Sample product data with the curated images
+// API service functions
+const apiService = {
+  async fetchProducts(category = null, search = null) {
+    try {
+      const params = new URLSearchParams();
+      if (category && category !== 'all') params.append('category', category);
+      if (search) params.append('search', search);
+      
+      const response = await fetch(`${API_BASE_URL}/api/products?${params}`);
+      if (!response.ok) throw new Error('Failed to fetch products');
+      const data = await response.json();
+      return data.products || [];
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return SAMPLE_PRODUCTS; // Fallback to sample data
+    }
+  },
+
+  async fetchCategories() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/categories`);
+      if (!response.ok) throw new Error('Failed to fetch categories');
+      const data = await response.json();
+      return data.categories || [];
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return CATEGORIES; // Fallback to sample data
+    }
+  }
+};
+
+// Sample product data with the curated images (fallback)
 const SAMPLE_PRODUCTS = [
   {
     id: '1',

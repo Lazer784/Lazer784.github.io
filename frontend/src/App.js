@@ -421,6 +421,19 @@ function ProductsPage({ addToCart, searchQuery }) {
     }
   });
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 py-8 px-4">
+        <div className="container mx-auto">
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
+            <span className="ml-2 text-amber-700">Loading products...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 py-8 px-4">
       <div className="container mx-auto">

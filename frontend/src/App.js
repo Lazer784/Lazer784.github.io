@@ -312,55 +312,62 @@ function HomePage({ addToCart }) {
       <section className="py-16 px-4 bg-white">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-amber-900 text-center mb-12">Featured Products</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SAMPLE_PRODUCTS.slice(0, 3).map((product) => (
-              <Card key={product.id} className="hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-amber-100 hover:border-amber-300 overflow-hidden">
-                <div className="relative">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  {product.organic && (
-                    <Badge className="absolute top-2 right-2 bg-green-600">Organic</Badge>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <CardContent className="p-6">
-                  <h4 className="font-semibold text-lg text-amber-900 mb-2">{product.name}</h4>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                        />
-                      ))}
-                      <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
-                    </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-16">
+              <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
+              <span className="ml-2 text-amber-700">Loading products...</span>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {products.map((product) => (
+                <Card key={product.id} className="hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-amber-100 hover:border-amber-300 overflow-hidden">
+                  <div className="relative">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    {product.organic && (
+                      <Badge className="absolute top-2 right-2 bg-green-600">Organic</Badge>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-amber-800">₹{product.price}</span>
-                      {product.originalPrice > product.price && (
-                        <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
-                      )}
+                  <CardContent className="p-6">
+                    <h4 className="font-semibold text-lg text-amber-900 mb-2">{product.name}</h4>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                          />
+                        ))}
+                        <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
+                      </div>
                     </div>
-                    <span className="text-sm text-gray-600">{product.weight}</span>
-                  </div>
-                </CardContent>
-                <CardFooter className="p-6 pt-0">
-                  <Button 
-                    onClick={() => addToCart(product)}
-                    className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                  >
-                    Add to Cart
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-amber-800">₹{product.price}</span>
+                        {product.originalPrice > product.price && (
+                          <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                        )}
+                      </div>
+                      <span className="text-sm text-gray-600">{product.weight}</span>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="p-6 pt-0">
+                    <Button 
+                      onClick={() => addToCart(product)}
+                      className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      Add to Cart
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-12">
             <Button 
               onClick={() => navigate('/products')}

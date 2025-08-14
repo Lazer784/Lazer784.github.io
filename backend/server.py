@@ -235,6 +235,10 @@ async def create_customer(customer: Customer):
         return {"message": "Customer already exists", "customer": existing_customer}
     
     customer_dict = customer.dict()
+    # Convert datetime to string for MongoDB storage
+    if 'created_at' in customer_dict:
+        customer_dict['created_at'] = customer_dict['created_at'].isoformat()
+    
     db.customers.insert_one(customer_dict)
     return {"message": "Customer created successfully", "customer": customer_dict}
 

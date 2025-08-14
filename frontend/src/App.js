@@ -451,7 +451,7 @@ function ProductsPage({ addToCart, searchQuery }) {
                   >
                     All Products
                   </Button>
-                  {CATEGORIES.map(category => (
+                  {categories.map(category => (
                     <Button
                       key={category.id}
                       variant={selectedCategory === category.id ? 'default' : 'ghost'}

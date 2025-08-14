@@ -385,9 +385,25 @@ function HomePage({ addToCart }) {
 }
 
 function ProductsPage({ addToCart, searchQuery }) {
-  const [products] = useState(SAMPLE_PRODUCTS);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const [productsData, categoriesData] = await Promise.all([
+        apiService.fetchProducts(selectedCategory, searchQuery),
+        apiService.fetchCategories()
+      ]);
+      setProducts(productsData);
+      setCategories(categoriesData);
+      setLoading(false);
+    };
+    loadData();
+  }, [selectedCategory, searchQuery]);
 
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;

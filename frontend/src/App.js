@@ -390,6 +390,15 @@ function ProductsPage({ addToCart, searchQuery }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [loading, setLoading] = useState(true);
+  const [searchParams] = new URLSearchParams(window.location.search);
+
+  useEffect(() => {
+    // Set category from URL parameter
+    const categoryFromURL = searchParams.get('category');
+    if (categoryFromURL) {
+      setSelectedCategory(categoryFromURL);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const loadData = async () => {
